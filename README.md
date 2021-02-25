@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+stoped att 1.08 and 40 sec +/-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
