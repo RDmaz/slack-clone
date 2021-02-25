@@ -1,19 +1,38 @@
 import './App.css';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Chat from './components/Chat';
 import Login from './components/Login';
 import styled from 'styled-components';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import db from './firebase';
 
 function App() {
+	const [rooms, setRooms] = useState([]); //why is my setRooms blue and Naz has it yellow?
+
+	const getChannels = () => {
+		db.collection('rooms').onSnapshot((snapshot) => {
+			setRooms(
+				snapshot.docs.map((doc) => {
+					return { id: doc.id, name: doc.data().name }; //return the data for every singel element
+				})
+			);
+		});
+	};
+
+	useEffect(() => {
+		getChannels();
+	}, []);
+
 	return (
 		<div className='App'>
 			<Router>
 				<Container>
 					<Header />
 					<Main>
-						<Sidebar />
+						<Sidebar rooms={rooms} />{' '}
+						{/* like this we pass data from App to Sidebar */}
 						<Switch>
 							<Route path='/room'>
 								<Chat />
