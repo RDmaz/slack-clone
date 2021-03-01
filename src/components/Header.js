@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-function Header() {
+
+// the user instead of props is distructure. Now we put there user and bellow we don't have to use props.
+function Header({ user, signOut }) {
 	return (
 		<Container>
 			<Main>
@@ -15,9 +17,11 @@ function Header() {
 				<HelpOutlineIcon />
 			</Main>
 			<UserContainer>
-				<Name>Rami</Name>
-				<UserImage>
-					<img src='https://i.imgur.com/6VBx3io.png' />
+				<Name>{user.name}</Name>
+				<UserImage onClick={signOut}>
+					<img
+						src={user.photo ? user.photo : 'https://i.imgur.com/6VBx3io.png'}
+					/>
 				</UserImage>
 			</UserContainer>
 		</Container>
@@ -81,7 +85,7 @@ const UserImage = styled.div`
 	height: 28px;
 	border: 2px solid white;
 	border-radius: 3px;
-
+	cursor: pointer;
 	img {
 		width: 100%;
 	}

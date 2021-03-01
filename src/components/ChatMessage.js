@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function ChatMessage() {
+function ChatMessage({ text, name, image, timestamp }) {
+	//after passin the props here we can change the static to the props in the components bellow
 	return (
 		<Container>
 			<UserAvatar>
-				<img src='https://randomuser.me/api/portraits/women/25.jpg' />
+				<img src={image} />
 			</UserAvatar>
 			<MessageContent>
 				<Name>
-					Rafeh Qazi
-					<span>2/23/2021 11:13:55 AM</span>
+					{name}
+					<span>{new Date(timestamp.toDate()).toUTCString()}</span>
+					{/* we use .toDate in order to change it from a string to actually a date.  */}
 				</Name>
-				<Text>This is the best Challenge</Text>
+				<Text>{text}</Text>
 			</MessageContent>
 		</Container>
 	);

@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SendIcon from '@material-ui/icons/Send';
 
-function ChatInput() {
+function ChatInput({ sendMessage }) {
+	const [input, setInput] = useState('');
+
+	const send = (e) => {
+		// this function will be called by the button send
+		e.preventDefault(); //preventDefault command will not refresh the page as it usally does by default!
+		if (!input) return;
+		sendMessage(input);
+		setInput('');
+	};
 	return (
 		<Container>
 			<InputContainer>
 				<form>
-					{/* we use a form because it will allow us to call a function on the
-					submit, otherwise we'll have to add lots of functionality. */}
-					<input type='text' placeholder='Message here...' />
-					<SendButton>
+					<input
+						onChange={(e) => setInput(e.target.value)} // we change the input every time we type
+						type='text'
+						value={input}
+						placeholder='Message here...'
+					/>
+					<SendButton type='submit' onClick={send}>
+						{/* we use the submit here because it will allow us to hit the enter.  */}
 						<Send />
 					</SendButton>
 				</form>
@@ -18,7 +31,10 @@ function ChatInput() {
 		</Container>
 	);
 }
-
+{
+	/* we use a form because it will allow us to call a function on the
+					submit, otherwise we'll have to add lots of functionality. */
+}
 export default ChatInput;
 
 const Container = styled.div`
@@ -48,7 +64,7 @@ const InputContainer = styled.div`
 	}
 `;
 
-const SendButton = styled.div`
+const SendButton = styled.button`
 	background: #007a5a;
 	border-radius: 2px;
 	width: 32px;
@@ -58,6 +74,7 @@ const SendButton = styled.div`
 	align-items: center;
 	margin-right: 5px;
 	cursor: pointer;
+	border: none;
 	.MuiSvgIcon-root {
 		width: 18px;
 		// The above line will change the width of the Icon.
